@@ -32,3 +32,20 @@ class MatchResult(BaseModel):
     away_team: Team
     home_goals: int
     away_goals: int
+
+class KnockoutMatch(BaseModel):
+    home_team: Team
+    away_team: Team
+    home_goals: int
+    away_goals: int
+    winner: Team
+    penalties: bool = False
+
+class TournamentResult(BaseModel):
+    group_stage: dict[str, list[GroupStanding]]
+    round_of_32: list[KnockoutMatch]
+    round_of_16: list[KnockoutMatch]
+    quarterfinals: list[KnockoutMatch]
+    semifinals: list[KnockoutMatch]
+    final: KnockoutMatch
+    champion: Team

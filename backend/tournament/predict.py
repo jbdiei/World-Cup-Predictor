@@ -51,7 +51,7 @@ def win_probabilities(home: Team, away: Team) -> dict:
                 probs["draw"]+=p
     return {
             home.name: round(probs["home_win"], 3),
-            away.name: round(probs["home_win"], 3),
+            away.name: round(probs["away_win"], 3),
             "draw": round(probs["draw"], 3)
         }
 
