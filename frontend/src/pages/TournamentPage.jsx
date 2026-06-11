@@ -134,33 +134,14 @@ export default function TournamentPage() {
             Simulates all 12 groups · R32 through Final · 103 matches
           </p>
         </div>
-        <div style={{ display: 'flex', gap: 8 }}>
-          {animating && (
-            <button
-              onClick={skipAnimation}
-              style={{
-                padding: '11px 18px',
-                background: '#FFFFFF',
-                border: '1px solid #E2E8F0',
-                borderRadius: 10,
-                color: '#475569',
-                fontSize: 14,
-                fontWeight: 600,
-                cursor: 'pointer',
-                transition: 'all 0.15s',
-              }}
-              onMouseEnter={e => { e.currentTarget.style.background = '#F8FAFC'; e.currentTarget.style.borderColor = '#CBD5E1' }}
-              onMouseLeave={e => { e.currentTarget.style.background = '#FFFFFF'; e.currentTarget.style.borderColor = '#E2E8F0' }}
-            >
-              Skip →
-            </button>
-          )}
+        <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: 8, width: isMobile ? '100%' : 'auto' }}>
           <button
             onClick={handleSimulate}
             disabled={loading}
             style={{
-              display: 'flex', alignItems: 'center', gap: 8,
+              display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
               padding: '11px 22px',
+              width: isMobile ? '100%' : 'auto',
               background: loading ? '#FEE2E2' : '#CC1420',
               border: 'none',
               borderRadius: 10,
@@ -176,6 +157,27 @@ export default function TournamentPage() {
             {loading && <span className="spinner" style={{ width: 14, height: 14, borderTopColor: '#FFFFFF' }} />}
             {loading ? 'Simulating…' : result ? 'Re-simulate' : 'Simulate Tournament'}
           </button>
+          {animating && (
+            <button
+              onClick={skipAnimation}
+              style={{
+                padding: '11px 18px',
+                width: isMobile ? '100%' : 'auto',
+                background: '#FFFFFF',
+                border: '1px solid #E2E8F0',
+                borderRadius: 10,
+                color: '#475569',
+                fontSize: 14,
+                fontWeight: 600,
+                cursor: 'pointer',
+                transition: 'all 0.15s',
+              }}
+              onMouseEnter={e => { e.currentTarget.style.background = '#F8FAFC'; e.currentTarget.style.borderColor = '#CBD5E1' }}
+              onMouseLeave={e => { e.currentTarget.style.background = '#FFFFFF'; e.currentTarget.style.borderColor = '#E2E8F0' }}
+            >
+              Skip →
+            </button>
+          )}
         </div>
       </div>
 
@@ -191,19 +193,19 @@ export default function TournamentPage() {
           background: '#FFFFFF',
           border: '1px solid #E2E8F0',
           borderRadius: 20,
-          padding: '52px 40px',
+          padding: isMobile ? '32px 20px' : '52px 40px',
           textAlign: 'center',
         }}>
           <div style={{ fontSize: 13, fontWeight: 700, letterSpacing: '0.18em', color: '#CC1420', textTransform: 'uppercase', marginBottom: 12 }}>
             Full Tournament Simulation
           </div>
-          <h3 style={{ margin: '0 0 8px', fontSize: 26, fontWeight: 800, color: '#0F172A', letterSpacing: '-0.03em' }}>
+          <h3 style={{ margin: '0 0 8px', fontSize: isMobile ? 20 : 26, fontWeight: 800, color: '#0F172A', letterSpacing: '-0.03em' }}>
             Watch the bracket play out in real time
           </h3>
-          <p style={{ margin: '0 0 32px', fontSize: 15, color: '#475569', maxWidth: 400, marginLeft: 'auto', marginRight: 'auto' }}>
+          <p style={{ margin: '0 0 28px', fontSize: 14, color: '#475569', maxWidth: 400, marginLeft: 'auto', marginRight: 'auto' }}>
             Simulates all 12 groups, picks 32 qualifiers, then runs every knockout match from R32 to the Final.
           </p>
-          <div style={{ display: 'flex', justifyContent: 'center', gap: 32, marginBottom: 36 }}>
+          <div style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: isMobile ? 14 : 32, marginBottom: 32 }}>
             {['12 groups', '103 matches', 'Animated reveal'].map(label => (
               <div key={label} style={{ display: 'flex', alignItems: 'center', gap: 7, fontSize: 14, color: '#475569' }}>
                 <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#0E7490', flexShrink: 0, display: 'inline-block' }} />
@@ -215,6 +217,7 @@ export default function TournamentPage() {
             onClick={handleSimulate}
             style={{
               padding: '14px 40px',
+              width: isMobile ? '100%' : 'auto',
               background: '#CC1420',
               border: 'none',
               borderRadius: 12,

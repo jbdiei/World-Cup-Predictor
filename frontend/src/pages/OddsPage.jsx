@@ -73,6 +73,7 @@ export default function OddsPage() {
                 key={opt.value}
                 onClick={() => setN(opt.value)}
                 style={{
+                  flex: isMobile ? 1 : 'none',
                   padding: '6px 12px',
                   background: n === opt.value ? '#FFFFFF' : 'transparent',
                   border: n === opt.value ? '1px solid #E2E8F0' : '1px solid transparent',
@@ -97,8 +98,9 @@ export default function OddsPage() {
             onClick={handleRun}
             disabled={loading || allTeams.length === 0}
             style={{
-              display: 'flex', alignItems: 'center', gap: 8,
+              display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
               padding: '11px 22px',
+              width: isMobile ? '100%' : 'auto',
               background: loading ? '#FEE2E2' : '#CC1420',
               border: 'none',
               borderRadius: 10,
@@ -127,24 +129,25 @@ export default function OddsPage() {
       {rankings.length === 0 && !loading && (
         <div style={{
           background: '#FFFFFF', border: '1px solid #E2E8F0', borderRadius: 20,
-          padding: '52px 40px', textAlign: 'center',
+          padding: isMobile ? '32px 20px' : '52px 40px', textAlign: 'center',
         }}>
           <div style={{ fontSize: 13, fontWeight: 700, letterSpacing: '0.18em', color: '#CC1420', textTransform: 'uppercase', marginBottom: 12 }}>
             Monte Carlo Simulation
           </div>
-          <h3 style={{ margin: '0 0 8px', fontSize: 26, fontWeight: 800, color: '#0F172A', letterSpacing: '-0.03em' }}>
+          <h3 style={{ margin: '0 0 8px', fontSize: isMobile ? 20 : 26, fontWeight: 800, color: '#0F172A', letterSpacing: '-0.03em' }}>
             Who wins the World Cup?
           </h3>
-          <p style={{ margin: '0 0 28px', fontSize: 15, color: '#475569', maxWidth: 380, marginLeft: 'auto', marginRight: 'auto' }}>
+          <p style={{ margin: '0 0 24px', fontSize: 14, color: '#475569', maxWidth: 380, marginLeft: 'auto', marginRight: 'auto' }}>
             Runs the full tournament N times and ranks all 48 teams by how often they win.
           </p>
-          <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 24 }}>
-            <div style={{ display: 'flex', background: '#F1F5F9', borderRadius: 10, padding: 3, gap: 2 }}>
+          <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 20 }}>
+            <div style={{ display: 'flex', background: '#F1F5F9', borderRadius: 10, padding: 3, gap: 2, width: isMobile ? '100%' : 'auto' }}>
               {N_OPTIONS.map(opt => (
                 <button
                   key={opt.value}
                   onClick={() => setN(opt.value)}
                   style={{
+                    flex: isMobile ? 1 : 'none',
                     padding: '8px 16px',
                     background: n === opt.value ? '#FFFFFF' : 'transparent',
                     border: n === opt.value ? '1px solid #E2E8F0' : '1px solid transparent',
@@ -170,6 +173,7 @@ export default function OddsPage() {
             disabled={allTeams.length === 0}
             style={{
               padding: '14px 40px', background: '#CC1420', border: 'none', borderRadius: 12,
+              width: isMobile ? '100%' : 'auto',
               color: '#FFFFFF', fontSize: 16, fontWeight: 700, cursor: 'pointer', transition: 'all 0.15s',
             }}
             onMouseEnter={e => { e.currentTarget.style.background = '#B01020' }}
