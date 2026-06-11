@@ -67,8 +67,9 @@ export default function GroupsPage() {
           onClick={simulateAll}
           disabled={simulating || loading}
           style={{
-            display: 'flex', alignItems: 'center', gap: 8,
+            display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
             padding: '11px 22px',
+            width: isMobile ? '100%' : 'auto',
             background: simulating ? '#FEE2E2' : hasSimulated ? '#FFFFFF' : '#CC1420',
             border: hasSimulated ? '1px solid #E2E8F0' : 'none',
             borderRadius: 10,
