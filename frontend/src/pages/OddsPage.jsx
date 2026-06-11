@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { getGroups, simulateOdds } from '../api'
 import { Flag } from '../flags'
+import { useIsMobile } from '../hooks/useIsMobile'
 
 const N_OPTIONS = [
   { value: 500,  label: '500',  note: 'Fast' },
@@ -45,17 +46,18 @@ export default function OddsPage() {
     }
   }
 
+  const isMobile = useIsMobile()
   const maxProb = rankings.length > 0 ? rankings[0].prob : 1
 
   return (
     <div>
       {/* Page header */}
-      <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', marginBottom: 32 }}>
+      <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', alignItems: isMobile ? 'flex-start' : 'flex-end', justifyContent: 'space-between', gap: isMobile ? 16 : 0, marginBottom: isMobile ? 20 : 32 }}>
         <div>
           <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.2em', color: '#64748B', textTransform: 'uppercase', marginBottom: 6 }}>
             FIFA World Cup 2026
           </div>
-          <h2 style={{ margin: 0, fontSize: 34, fontWeight: 800, letterSpacing: '-0.03em', color: '#0F172A', lineHeight: 1 }}>
+          <h2 style={{ margin: 0, fontSize: isMobile ? 26 : 34, fontWeight: 800, letterSpacing: '-0.03em', color: '#0F172A', lineHeight: 1 }}>
             Tournament Odds
           </h2>
           <p style={{ margin: '8px 0 0', fontSize: 15, color: '#475569' }}>
@@ -63,7 +65,7 @@ export default function OddsPage() {
           </p>
         </div>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+        <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', alignItems: isMobile ? 'stretch' : 'center', gap: 8, width: isMobile ? '100%' : 'auto' }}>
           {/* N selector */}
           <div style={{ display: 'flex', background: '#F1F5F9', borderRadius: 10, padding: 3, gap: 2 }}>
             {N_OPTIONS.map(opt => (
@@ -183,14 +185,14 @@ export default function OddsPage() {
         <div style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', borderRadius: 16, overflow: 'hidden' }}>
           {/* Table header */}
           <div style={{
-            display: 'grid', gridTemplateColumns: '44px 1fr 180px 72px',
+            display: 'grid', gridTemplateColumns: isMobile ? '44px 1fr 72px' : '44px 1fr 180px 72px',
             padding: '10px 20px', borderBottom: '1px solid #F1F5F9',
             background: '#F8FAFC',
           }}>
-            {['#', 'Team', 'Win probability', '%'].map((h, i) => (
+            {(isMobile ? ['#', 'Team', '%'] : ['#', 'Team', 'Win probability', '%']).map((h, i) => (
               <div key={h} style={{
                 fontSize: 10, fontWeight: 700, letterSpacing: '0.15em', color: '#64748B',
-                textTransform: 'uppercase', textAlign: i === 3 ? 'right' : 'left',
+                textTransform: 'uppercase', textAlign: i === (isMobile ? 2 : 3) ? 'right' : 'left',
               }}>
                 {h}
               </div>
@@ -205,7 +207,7 @@ export default function OddsPage() {
               <div
                 key={team.name}
                 style={{
-                  display: 'grid', gridTemplateColumns: '44px 1fr 180px 72px',
+                  display: 'grid', gridTemplateColumns: isMobile ? '44px 1fr 72px' : '44px 1fr 180px 72px',
                   alignItems: 'center',
                   padding: '12px 20px',
                   borderLeft: `2px solid ${accent.left}`,
@@ -241,20 +243,22 @@ export default function OddsPage() {
                   </div>
                 </div>
 
-                {/* Bar */}
-                <div style={{ height: 6, background: '#F1F5F9', borderRadius: 3, overflow: 'hidden' }}>
-                  {team.prob > 0 && (
-                    <div style={{
-                      height: '100%',
-                      width: `${barWidth}%`,
-                      background: i < 3 ? '#B45309' : i < 8 ? '#CC1420' : '#CBD5E1',
-                      borderRadius: 3,
-                      animation: 'barGrow 0.5s ease both',
-                      animationDelay: `${Math.min(i * 0.015, 0.4)}s`,
-                      transformOrigin: 'left',
-                    }} />
-                  )}
-                </div>
+                {/* Bar — hidden on mobile */}
+                {!isMobile && (
+                  <div style={{ height: 6, background: '#F1F5F9', borderRadius: 3, overflow: 'hidden' }}>
+                    {team.prob > 0 && (
+                      <div style={{
+                        height: '100%',
+                        width: `${barWidth}%`,
+                        background: i < 3 ? '#B45309' : i < 8 ? '#CC1420' : '#CBD5E1',
+                        borderRadius: 3,
+                        animation: 'barGrow 0.5s ease both',
+                        animationDelay: `${Math.min(i * 0.015, 0.4)}s`,
+                        transformOrigin: 'left',
+                      }} />
+                    )}
+                  </div>
+                )}
 
                 {/* Percentage */}
                 <div style={{

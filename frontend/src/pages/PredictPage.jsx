@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { getGroups, predictMatch } from '../api'
 import WinProbBar from '../components/WinProbBar'
 import { Flag } from '../flags'
+import { useIsMobile } from '../hooks/useIsMobile'
 
 const selectStyle = {
   width: '100%',
@@ -23,6 +24,7 @@ export default function PredictPage() {
   const [result, setResult] = useState(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
+  const isMobile = useIsMobile()
 
   useEffect(() => {
     getGroups().then(groups => {
@@ -99,15 +101,15 @@ export default function PredictPage() {
         </div>
 
         {/* Matchup hero */}
-        <div style={{ padding: '28px 24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderTop: '1px solid #F1F5F9' }}>
+        <div style={{ padding: isMobile ? '20px 16px' : '28px 24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderTop: '1px solid #F1F5F9' }}>
           <div style={{ flex: 1, textAlign: 'left' }}>
-            <div style={{ marginBottom: 8 }}><Flag name={home} size={48} /></div>
-            <div style={{ fontSize: 20, fontWeight: 800, letterSpacing: '-0.02em', color: '#0F172A', lineHeight: 1.1 }}>
+            <div style={{ marginBottom: 8 }}><Flag name={home} size={isMobile ? 36 : 48} /></div>
+            <div style={{ fontSize: isMobile ? 15 : 20, fontWeight: 800, letterSpacing: '-0.02em', color: '#0F172A', lineHeight: 1.1 }}>
               {home}
             </div>
           </div>
 
-          <div style={{ padding: '0 16px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10 }}>
+          <div style={{ padding: isMobile ? '0 10px' : '0 16px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10 }}>
             <div style={{
               fontSize: 12, fontWeight: 800, letterSpacing: '0.18em',
               color: '#64748B', textTransform: 'uppercase',
@@ -140,8 +142,8 @@ export default function PredictPage() {
           </div>
 
           <div style={{ flex: 1, textAlign: 'right' }}>
-            <div style={{ marginBottom: 8 }}><Flag name={away} size={48} /></div>
-            <div style={{ fontSize: 20, fontWeight: 800, letterSpacing: '-0.02em', color: '#0F172A', lineHeight: 1.1 }}>
+            <div style={{ marginBottom: 8 }}><Flag name={away} size={isMobile ? 36 : 48} /></div>
+            <div style={{ fontSize: isMobile ? 15 : 20, fontWeight: 800, letterSpacing: '-0.02em', color: '#0F172A', lineHeight: 1.1 }}>
               {away}
             </div>
           </div>

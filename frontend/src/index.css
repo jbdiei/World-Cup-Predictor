@@ -55,6 +55,8 @@ body {
   animation: spin 0.7s linear infinite;
 }
 
+.hide-scrollbar::-webkit-scrollbar { display: none; }
+
 select {
   -webkit-appearance: none;
   appearance: none;

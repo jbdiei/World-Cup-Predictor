@@ -3,6 +3,7 @@ import GroupsPage from './pages/GroupsPage'
 import PredictPage from './pages/PredictPage'
 import TournamentPage from './pages/TournamentPage'
 import OddsPage from './pages/OddsPage'
+import { useIsMobile } from './hooks/useIsMobile'
 
 const TABS = [
   { key: 'groups',     label: 'Groups' },
@@ -115,6 +116,36 @@ function WC26Logo() {
 
 export default function App() {
   const [tab, setTab] = useState('groups')
+  const isMobile = useIsMobile()
+
+  const tabButton = (key, label) => (
+    <button
+      key={key}
+      onClick={() => setTab(key)}
+      className="relative cursor-pointer border-0 bg-transparent"
+      style={{
+        padding: isMobile ? '0 14px' : '0 20px',
+        height: isMobile ? 44 : 62,
+        fontSize: isMobile ? 14 : 15,
+        fontWeight: 500,
+        color: tab === key ? '#0F172A' : '#64748B',
+        transition: 'color 0.15s',
+        whiteSpace: 'nowrap',
+        flexShrink: 0,
+      }}
+    >
+      {label}
+      {tab === key && (
+        <span style={{
+          position: 'absolute', bottom: 0,
+          left: isMobile ? 14 : 20, right: isMobile ? 14 : 20,
+          height: 2, background: '#CC1420',
+          borderRadius: '2px 2px 0 0',
+          animation: 'fadeInUp 0.2s ease',
+        }} />
+      )}
+    </button>
+  )
 
   return (
     <div style={{ minHeight: '100vh', background: '#F8FAFC' }}>
@@ -123,40 +154,33 @@ export default function App() {
         background: '#FFFFFF',
         position: 'sticky', top: 0, zIndex: 50,
       }}>
-        <div className="max-w-7xl mx-auto px-6 flex items-center justify-between" style={{ height: 62 }}>
-          <WC26Logo />
-
-          <nav className="flex items-center">
-            {TABS.map(({ key, label }) => (
-              <button
-                key={key}
-                onClick={() => setTab(key)}
-                className="relative cursor-pointer border-0 bg-transparent"
-                style={{
-                  padding: '0 20px',
-                  height: 62,
-                  fontSize: 15,
-                  fontWeight: 500,
-                  color: tab === key ? '#0F172A' : '#64748B',
-                  transition: 'color 0.15s',
-                }}
-              >
-                {label}
-                {tab === key && (
-                  <span style={{
-                    position: 'absolute', bottom: 0, left: 20, right: 20,
-                    height: 2, background: '#CC1420',
-                    borderRadius: '2px 2px 0 0',
-                    animation: 'fadeInUp 0.2s ease',
-                  }} />
-                )}
-              </button>
-            ))}
-          </nav>
-        </div>
+        {isMobile ? (
+          <>
+            <div style={{ padding: '0 16px', height: 52, display: 'flex', alignItems: 'center' }}>
+              <WC26Logo />
+            </div>
+            <div style={{
+              borderTop: '1px solid #F1F5F9',
+              display: 'flex',
+              overflowX: 'auto',
+              scrollbarWidth: 'none',
+              WebkitOverflowScrolling: 'touch',
+              padding: '0 2px',
+            }}>
+              {TABS.map(({ key, label }) => tabButton(key, label))}
+            </div>
+          </>
+        ) : (
+          <div className="max-w-7xl mx-auto px-6 flex items-center justify-between" style={{ height: 62 }}>
+            <WC26Logo />
+            <nav className="flex items-center">
+              {TABS.map(({ key, label }) => tabButton(key, label))}
+            </nav>
+          </div>
+        )}
       </header>
 
-      <main className="max-w-7xl mx-auto px-6 py-10">
+      <main className="max-w-7xl mx-auto" style={{ padding: isMobile ? '24px 16px' : '40px 24px' }}>
         <div style={{ display: tab === 'groups'     ? 'block' : 'none' }}><GroupsPage /></div>
         <div style={{ display: tab === 'tournament' ? 'block' : 'none' }}><TournamentPage /></div>
         <div style={{ display: tab === 'odds'       ? 'block' : 'none' }}><OddsPage /></div>

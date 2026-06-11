@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { getGroups, simulateGroup } from '../api'
 import GroupTable from '../components/GroupTable'
+import { useIsMobile } from '../hooks/useIsMobile'
 
 const GROUPS = 'ABCDEFGHIJKL'.split('')
 
@@ -18,6 +19,9 @@ export default function GroupsPage() {
   const [loading, setLoading] = useState(true)
   const [simulating, setSimulating] = useState(false)
   const [hasSimulated, setHasSimulated] = useState(false)
+  const isMobile = useIsMobile()
+  const isNarrow = useIsMobile(1024)
+  const gridCols = isMobile ? '1fr' : isNarrow ? 'repeat(2, 1fr)' : 'repeat(3, 1fr)'
 
   useEffect(() => {
     getGroups().then(groups => {
@@ -47,12 +51,12 @@ export default function GroupsPage() {
 
   return (
     <div>
-      <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', marginBottom: 32 }}>
+      <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', alignItems: isMobile ? 'flex-start' : 'flex-end', justifyContent: 'space-between', gap: isMobile ? 16 : 0, marginBottom: isMobile ? 20 : 32 }}>
         <div>
           <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.2em', color: '#64748B', textTransform: 'uppercase', marginBottom: 6 }}>
             FIFA World Cup 2026
           </div>
-          <h2 style={{ margin: 0, fontSize: 34, fontWeight: 800, letterSpacing: '-0.03em', color: '#0F172A', lineHeight: 1 }}>
+          <h2 style={{ margin: 0, fontSize: isMobile ? 26 : 34, fontWeight: 800, letterSpacing: '-0.03em', color: '#0F172A', lineHeight: 1 }}>
             Group Stage
           </h2>
           <p style={{ margin: '8px 0 0', fontSize: 15, color: '#475569' }}>
@@ -90,7 +94,7 @@ export default function GroupsPage() {
         </button>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 14 }}>
+      <div style={{ display: 'grid', gridTemplateColumns: gridCols, gap: 14 }}>
         {loading
           ? GROUPS.map(g => (
             <div key={g} style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', borderRadius: 16, height: 252 }} />

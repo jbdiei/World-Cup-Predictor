@@ -2,6 +2,7 @@ import { useState, useRef } from 'react'
 import { simulateTournament } from '../api'
 import BracketView from '../components/BracketView'
 import { Flag } from '../flags'
+import { useIsMobile } from '../hooks/useIsMobile'
 
 const ROUND_SCHEDULE = [
   { key: 'round_of_32',   matchDelay: 160, pauseAfter: 800  },
@@ -12,6 +13,7 @@ const ROUND_SCHEDULE = [
 ]
 
 function ChampionBanner({ champion, finalMatch }) {
+  const isMobile = useIsMobile()
   const runner = finalMatch.winner.name === finalMatch.home_team.name
     ? finalMatch.away_team
     : finalMatch.home_team
@@ -22,31 +24,31 @@ function ChampionBanner({ champion, finalMatch }) {
       background: 'linear-gradient(135deg, #FFFBEB 0%, #FFFFFF 55%)',
       border: '1px solid #FCD34D',
       borderRadius: 20,
-      padding: '36px 48px',
-      marginBottom: 40,
+      padding: isMobile ? '24px 20px' : '36px 48px',
+      marginBottom: isMobile ? 24 : 40,
       animation: 'reveal 0.5s ease both',
     }}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 36 }}>
-        <div style={{ flexShrink: 0 }}><Flag name={champion.name} size={80} /></div>
-        <div style={{ flex: 1 }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: isMobile ? 16 : 36 }}>
+        <div style={{ flexShrink: 0 }}><Flag name={champion.name} size={isMobile ? 52 : 80} /></div>
+        <div style={{ flex: 1, minWidth: 0 }}>
           <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.22em', color: '#B45309', textTransform: 'uppercase', marginBottom: 8 }}>
             World Cup 2026 Champion
           </div>
-          <h2 style={{ margin: 0, fontSize: 48, fontWeight: 900, letterSpacing: '-0.04em', color: '#0F172A', lineHeight: 1 }}>
+          <h2 style={{ margin: 0, fontSize: isMobile ? 30 : 48, fontWeight: 900, letterSpacing: '-0.04em', color: '#0F172A', lineHeight: 1 }}>
             {champion.name}
           </h2>
-          <div style={{ marginTop: 14, display: 'flex', alignItems: 'center', gap: 16, flexWrap: 'wrap' }}>
+          <div style={{ marginTop: 12, display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap' }}>
             <div style={{
-              fontSize: 14, color: '#475569',
+              fontSize: isMobile ? 12 : 14, color: '#475569',
               fontFamily: 'ui-monospace, monospace',
               background: '#F8FAFC',
               border: '1px solid #E2E8F0',
-              borderRadius: 8, padding: '6px 14px',
+              borderRadius: 8, padding: isMobile ? '5px 10px' : '6px 14px',
             }}>
               Final · {finalMatch.home_team.name} {score} {finalMatch.away_team.name}
             </div>
-            <div style={{ fontSize: 14, color: '#64748B' }}>
-              Runner-up: <Flag name={runner.name} size={16} /> {runner.name}
+            <div style={{ fontSize: 13, color: '#64748B' }}>
+              Runner-up: <Flag name={runner.name} size={14} /> {runner.name}
             </div>
           </div>
         </div>
@@ -114,17 +116,18 @@ export default function TournamentPage() {
     setAnimating(false)
   }
 
+  const isMobile = useIsMobile()
   const finalRevealed = revealed?.final >= 1
 
   return (
     <div>
       {/* Page header */}
-      <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', marginBottom: 32 }}>
+      <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', alignItems: isMobile ? 'flex-start' : 'flex-end', justifyContent: 'space-between', gap: isMobile ? 16 : 0, marginBottom: isMobile ? 20 : 32 }}>
         <div>
           <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.2em', color: '#64748B', textTransform: 'uppercase', marginBottom: 6 }}>
             FIFA World Cup 2026
           </div>
-          <h2 style={{ margin: 0, fontSize: 34, fontWeight: 800, letterSpacing: '-0.03em', color: '#0F172A', lineHeight: 1 }}>
+          <h2 style={{ margin: 0, fontSize: isMobile ? 26 : 34, fontWeight: 800, letterSpacing: '-0.03em', color: '#0F172A', lineHeight: 1 }}>
             Tournament Simulator
           </h2>
           <p style={{ margin: '8px 0 0', fontSize: 15, color: '#475569' }}>
