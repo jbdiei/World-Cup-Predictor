@@ -61,11 +61,11 @@ export default function PredictPage() {
 
   return (
     <div style={{ maxWidth: 560, margin: '0 auto' }}>
-      <div style={{ marginBottom: 28 }}>
+      <div style={{ marginBottom: isMobile ? 20 : 28, textAlign: isMobile ? 'center' : 'left' }}>
         <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.2em', color: '#64748B', textTransform: 'uppercase', marginBottom: 6 }}>
           FIFA World Cup 2026
         </div>
-        <h2 style={{ margin: 0, fontSize: 34, fontWeight: 800, letterSpacing: '-0.03em', color: '#0F172A' }}>
+        <h2 style={{ margin: 0, fontSize: isMobile ? 26 : 34, fontWeight: 800, letterSpacing: '-0.03em', color: '#0F172A' }}>
           Match Predictor
         </h2>
         <p style={{ margin: '8px 0 0', fontSize: 15, color: '#475569' }}>

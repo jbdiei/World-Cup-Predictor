@@ -122,8 +122,8 @@ export default function TournamentPage() {
   return (
     <div>
       {/* Page header */}
-      <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', alignItems: isMobile ? 'flex-start' : 'flex-end', justifyContent: 'space-between', gap: isMobile ? 16 : 0, marginBottom: isMobile ? 20 : 32 }}>
-        <div>
+      <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', alignItems: isMobile ? 'stretch' : 'flex-end', justifyContent: 'space-between', gap: isMobile ? 16 : 0, marginBottom: isMobile ? 20 : 32 }}>
+        <div style={{ textAlign: isMobile ? 'center' : 'left' }}>
           <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.2em', color: '#64748B', textTransform: 'uppercase', marginBottom: 6 }}>
             FIFA World Cup 2026
           </div>
