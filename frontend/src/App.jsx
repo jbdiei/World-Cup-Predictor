@@ -4,6 +4,8 @@ import PredictPage from './pages/PredictPage'
 import TournamentPage from './pages/TournamentPage'
 import OddsPage from './pages/OddsPage'
 import { useIsMobile } from './hooks/useIsMobile'
+import { Analytics } from '@vercel/analytics/react'
+
 
 const TABS = [
   { key: 'groups',     label: 'Groups' },
@@ -186,6 +188,7 @@ export default function App() {
         <div style={{ display: tab === 'odds'       ? 'block' : 'none' }}><OddsPage /></div>
         <div style={{ display: tab === 'predict'    ? 'block' : 'none' }}><PredictPage /></div>
       </main>
+      <Analytics />
     </div>
   )
 }
